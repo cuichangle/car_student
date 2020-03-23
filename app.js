@@ -80,13 +80,8 @@ App({
   },
   globalData: {
     url:'',//请求地址
-    userInfo: null,
-    lon:'',
-    lat:'',
-    vanh:'',
-    navt:'',
-    windowh:'',
-    pagename:'维修专家'
+    userInfo: '',
+    
   },
 
   // 确认框

@@ -1,31 +1,38 @@
 const app = getApp()
-import utils from '../../utils/util.js'
+
 
 Page({
   data: {
-  text:'cccccc',
-  text1:'DDDDDDDDD',
+    markers: [],
+    mapScale: 11, //地图的缩放级别
+    latitude: 28.718941,
+    longitude: 115.828219,
   islogin:false,
-  avatar:app.globalData.userInfo
+ 
+  
   },
-  gomine(){
-    
-   
-  },
-  //getuserinfo异步的会有延迟，因此在首页不能根据app.globalData.userInfo 进行判断
-  getUserInfo(){
-    if (app.globalData.userInfo) {
-      
-    } else {
-      app.lunchCallback = () => {
-        wx.getUserInfo({
-          success: res => {
-            app.globalData.userInfo = userInfo
-            
-          }
-        })
-      }
+  getchildren(e){
+    this.setData({
+      islogin:false
+    })
+    if (!e.detail.cancel){
+      app.toast('授权成功')
     }
   },
 
+onShow() {
+
+  if (app.gets('userInfo')){
+    this.setData({
+      islogin:false
+    })
+  }else{
+
+    this.setData({
+      islogin: true
+    })
+  }
+  }
+
 })
+

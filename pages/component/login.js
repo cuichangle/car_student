@@ -17,10 +17,12 @@ Component({
   methods: {
     // 点击了确定
     bindGetUserInfo(e){
-      let info = e.detail.info
+      console.log(e)
+      let info = e.detail.userInfo
       
       if(info){
         app.globalData.userInfo = info
+        app.saves('userInfo',info)
         this.triggerEvent('cancelLogin', { dialog: false, cancel: false });
       }
     },

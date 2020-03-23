@@ -1,5 +1,5 @@
 const app = getApp()
-const qiniuUploader = require("qiniuUploader");
+// const qiniuUploader = require("qiniuUploader");
 
 const formatTime = (dates) => {
   
