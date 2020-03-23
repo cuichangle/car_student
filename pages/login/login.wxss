@@ -1,1 +1,92 @@
-/* pages/login/login.wxss */
+/* pages/login/login.wxss *//* pages/login/login.wxss */
+
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 750rpx;
+}
+
+.box{
+  width: 650rpx;
+  margin: 0 atuo;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.text{
+  width: 100%;
+  display: block;
+  text-align: left;
+  height:40rpx;
+  font-size:44rpx;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:rgba(40,40,40,1);
+  line-height:40rpx;
+  margin-top: 90rpx;
+}
+.input{
+  width: 650rpx;
+  padding-top: 60rpx;
+}
+.inputtop{
+  width: 100%;
+  position: relative;
+  padding: 20rpx 0;
+  border-bottom:2rpx solid rgba(234,234,234,1);
+  margin-top: 40rpx;
+}
+
+.inputbox{
+  padding-left: 14rpx;
+  display: block;
+  font-size:34rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgb(138, 134, 134);
+  width: 500rpx;
+}
+.img{
+  display: block;
+  width: 30rpx;height: 31rpx;
+  position: absolute;
+  right: 0;top: 15rpx;
+}
+.time{
+  width: auto;
+  right: 0;top: 0;
+  height: 60rpx;
+  font-size:26rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:60rpx;
+
+  background:linear-gradient(90deg,rgba(1,202,255,1) 0%, rgba(67,143,252,1) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.login{
+  width:508rpx;
+  height:92rpx;
+  background:linear-gradient(90deg,rgba(1,202,255,1),rgba(67,143,252,1));
+  border-radius:46rpx;
+  text-align: center;
+  line-height: 92rpx;
+  margin: 0 atuo;
+  margin-top: 110rpx;
+  color: #ffffff;
+  font-size:36rpx;
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+}
+
+.positonimg{
+  width: 100%;
+  height: 160rpx;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}

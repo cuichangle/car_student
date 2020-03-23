@@ -1,9 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/mine/mine",
-    "pages/login/login",
+    
     "pages/admin/admin",
+    
+    "pages/login/login",
+    
+    "pages/mine/mine",
+    
     "pages/users/users"
     
     
@@ -39,7 +43,13 @@
         "iconPath": "pages/image/mine.png",
         "pagePath": "pages/mine/mine",
         "text": "我的"
-      }
+      },
+          {
+            "selectedIconPath": "pages/image/home.png",
+            "iconPath": "pages/image/home.png",
+            "pagePath": "pages/login/login",
+            "text": "管理员"
+          }
     ]
   },
   "permission": {

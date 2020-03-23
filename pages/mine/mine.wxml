@@ -1,5 +1,20 @@
 
 <view class="page">
+  <view class='top' wx:if="{{userInfo}}" >
+    <image src='{{userInfo.avatarUrl}}' class='avatar' ></image>
+    
+    <view class='nickname'>{{userInfo.nickName}}</view>
+  </view>
+  <view class='list'>
+     我的车辆 <text>></text>
+  </view>
+  <view class='list'>
+     停车记录 <text>></text>
+  </view>
+  <view class='list'>
+     停车费用支出 <text>100</text>
+  </view>
+    
    <login bind:cancelLogin="getchildren" wx:if="{{islogin}}" ></login>
 </view>
 

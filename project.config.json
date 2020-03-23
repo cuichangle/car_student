@@ -21,7 +21,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.0",
+	"libVersion": "2.10.2",
 	"appid": "wxf015bd315662d077",
 	"projectname": "car_student",
 	"debugOptions": {

@@ -3,7 +3,7 @@ const app = getApp()
 
 Page({
   data: {
-
+    userInfo:'',
     islogin: false,
 
 
@@ -19,7 +19,9 @@ Page({
 
   onShow() {
     if (app.gets('userInfo')) {
+      console.log(app.gets('userInfo'))
       this.setData({
+        userInfo:app.gets('userInfo'),
         islogin: false
       })
     } else {

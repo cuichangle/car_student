@@ -1,2 +1,18 @@
-<!--pages/login/login.wxml-->
-<text>pages/login/login.wxml</text>
+<view class='content'>
+  <view class='box'>
+    <view class='text'>登录</view>
+    <view class='input'>
+      <view class='inputtop'>
+        <input class='inputbox' type='number' value="{{mobile}}" bindinput="bindnumber" placeholder='请输入手机号'></input>
+      </view>
+         <view class='inputtop'>
+        <input class='inputbox' type='number' value="{{pwd}}" bindinput="bindpwd" placeholder='请输入密码'></input>
+      </view>
+      <view class='inputtop'>
+        <input class='inputbox' confirm-type='done' type='number' value='{{code}}' bindinput="bindcode" placeholder='请输入验证码'></input>
+        <view class='img time' catchtap='getcode'>{{timetext}}</view>
+      </view>
+    </view>
+    <view class='login' catchtap='login'>登录</view>
+  </view>
+</view>
