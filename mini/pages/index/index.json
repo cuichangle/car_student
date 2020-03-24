@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+   "login":"/pages/component/login",
+   "van-popup": "../../vant/dist/popup"
+  }
+}

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+	<head lang="zh-cn">
+		<meta charset="utf-8">
+		<title>众筹 | zChou</title>
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+		<script src="js/jquery.min.js"></script>
+		<link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="./css/flat-ui.css">
+		<link rel="stylesheet" type="text/css" href="./css/zchou.css">
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<script src="js/all.js"></script>
+		
+		<script src="js/bootstrap.js"></script>
+		<script src="js/formValidation.js"></script>
+		<script src="js/jquery.remodal.js"></script>
+		<script src="js/vue.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	</head>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		.content_warp {
+			width: 87%;
+			margin: 0 auto;
+
+		}
+
+		.list_view {
+			position: relative;
+			background: #fff;
+			margin-top: 30px;
+			width: 320px;
+			height: 540px;
+			float: left;
+		  
+			margin-right: 60px;
+			transition: all .2s ease-in-out;
+		}
+		.list_view:hover{
+			cursor: pointer;
+			box-shadow:  0 0 7px 7px #ddd;
+			transform: scale(1.08);
+			transition: all .2s ease-in-out;
+		}
+
+		.c_top {
+			z-index: 0;
+			width: 100%;
+			height: 100px;
+			background: red url(img/12.jpg) no-repeat 100% 60%;
+		}
+
+		.c_userbox {
+			clear: both;
+			width: 100%;
+			margin-top: -100px;
+			display: flex;
+			padding: 50px 40px 0px;
+			align-items: center;
+		}
+
+		.avatar {
+			border: 3px solid #fff;
+			width: 80px;
+			height: 80px;
+			border-radius: 50%;
+			margin-right: 18px;
+		}
+
+		.nickname {
+			font-size: 20px;
+			color: #fff;
+		}
+
+		.createtime {
+			font-size: 14px;
+		}
+
+		.pd {
+			font-size: 15px;
+			padding: 0 20px 0 24px;
+		}
+    .pd div{
+		margin-top: 5px;
+	}
+		.c_title {
+			margin: 10px 0;
+
+			font-size: 24px;
+			color: #101010;
+		}
+
+		.c_intro {
+			border-bottom: 1px solid #CCC;
+			font-size: 14px;
+
+			height: 140px;
+			overflow-y: auto;
+			background: #eee;
+			border-radius: 6px;
+			padding: 4px;
+
+		}
+		.biaoqian{
+			margin-top: 20px;
+		}
+		.status_img{
+			position: absolute;
+			right: 0;
+			width: 70px;
+			height: 70px;
+		}
+	.maskwarp{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background: #101010;
+		opacity: 0.2;
+	}
+	.btn{
+		background: #34495E;
+		color: #fff;
+	}
+
+	.tab{
+		display: flex;
+		height: 60px;
+		line-height: 60px;
+	}
+	.tabbar{
+		color: #aaa;
+	
+		font-size: 22px;
+		font-weight: bold;
+		margin-right: 40px;
+	}
+	.active{
+		border-bottom: 2px solid #34495E;
+	color: #34495E;
+		
+	}
+	.main_explain{
+		padding: 10px 0;
+		font-size: 14px;
+		align-items: center;
+		display: flex;
+	}
+	.main_left{
+		overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+		width: 70%;
+	}
+	.main_right{
+		font-size: 16px;
+		text-align: right;
+		
+		flex: 1;
+	}
+	.main_right:hover{
+		color: blue;
+		cursor: pointer;
+		
+	}
+	.allow{
+		color: rgb(60, 226, 60);
+	}
+	.waitallow{
+		color: rgb(221, 221, 70);
+	}
+	.lookdetail{
+		color: rgb(85, 85, 241);
+		text-decoration: underline;
+	}
+	.lookdetail:hover{
+		cursor: pointer;
+	}
+	
+		[v-cloak]{
+			display: none;
+		}
+	</style>
+	<body>
+		<div id="app" v-cloak>
+			<div class="mc_background remodal-bg">
+				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+					<div class="container">
+						<div class="navbar-header">
+
+							<a class="navbar-brand" href="#">众筹平台</a>
+						</div>
+						<div class="collapse navbar-collapse" id="navbar-collapse">
+							<div class="navbar-form navbar-left" >
+								<div class="form-group">
+									<div class="input-group">
+										<input v-model="searchval" class="form-control" type="text" placeholder="关键词或作者搜索..."  />
+										<span class="input-group-btn">
+											<button @click="search" class="btn" title="搜索">
+												<span class="fui-search"></span>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							<ul class="nav navbar-nav navbar-right">
+								<li v-if="!username">
+									<a data-remodal-target="user-login-modal">
+										<span class="fui-user"></span>
+										<span style="margin-left: 4px;">请登录</span>
+									</a>
+								</li>
+								<li v-else>
+									<a>
+										<span class="fui-user"></span><span style="margin-left: 4px;"></span>
+										<span style="margin-left: 4px;">{{username}}</span>
+									</a>
+								</li>
+								<li>
+									<a @click="createProject" href="#">
+										<span class="fui-new" title="发起项目"></span>
+									</a>
+								</li>
+								<li>
+									<a @click="clickme">
+										<span class="fui-bubble" title="我的项目"></span>
+									</a>
+								</li>
+								<li>
+									<a href="setting.html">
+										<span class="fui-gear" title="设置"></span>
+									</a>
+								</li>
+								<li>
+									<a @click="logout" href="#">
+										<span class="fui-exit" title="登出"></span>
+										<span style="margin-left: 4px;">退出登录</span>
+									</a>
+								</li>
+
+							</ul>s
+						</div>
+					</div>
+				</nav>
+
+
+				<div class="container-fluid" style="width: 100%;height:  400px;background:url('./img/banner-background.jpg');background-size:1700px 500px;background-repeat:no-repeat;background-position: center center">
+
+					<div class="container">
+						<div style="color: #fff;text-align: center;padding-top: 90px;padding-bottom: 20px;">
+							<h3 style="color: #fff;text-shadow: 1px 2px 5px #000;">我有一个想法</h3>
+							<h3 style="color: #fff;text-shadow: 1px 2px 5px #000;">还缺一个你</h3>
+						</div>
+						<div style="text-align: center">
+							<button class="btn btn-hg btn-embossed btn-primary" @click="createProject">发起项目</button>"
+
+						</div>
+					</div>
+				</div>
+				<div class="content_warp">
+					<div class="main_explain">
+						<div class="main_left">
+								爱创业众筹平台可以为创业者发布创业项目，获得融资机会；机构投资者不必东奔西走，优质项目尽揽在手；而低至2万的投资门槛，也可让个人投资人拥有更安全、门槛更低、更方便投资优质创业企业的机会。
+								平台严格审查每一位发起人的资质，保证每一个众筹内容的真实性。如果发现虚假信息请及时举报，确保用户资金的安全，平台按照一定金额赔付用户。
+						</div>
+						<div @click='gopingtai' class="main_right">
+							查看详情》
+						</div>
+					</div>
+					<div class="tab">
+							<div @click="changetab(2)" class="tabbar" :class="{active:cur == 2}">进行中</div>
+						
+						<div @click="changetab(0)" class="tabbar" :class="{active:cur == 0}">全部</div>
+						<div @click="changetab(3)" class="tabbar" :class="{active:cur == 3}">已完成</div>
+						<div @click="changetab(1)" class="tabbar" :class="{active:cur == 1}">待审核</div>
+						<div @click="changetab(4)" class="tabbar" :class="{active:cur == 4}">我的</div>
+						
+						
+					</div>
+					<div v-if="list.length==0">暂无内容</div>
+					<div class="list_view" @click="gotodetail(item.id,item.status)"  v-for="(item,index) in list" :key="index">
+						 <div class="maskwarp"  v-if="item.status!= 2 && self != 1" ></div>
+						<div class="c_top">
+							<img class="status_img" v-if="item.status == 1" src="img/state3.png" >
+							<img class="status_img" v-if="item.status == 2" src="img/state1.png" >
+							<img class="status_img" v-if="item.status == 3" src="img/state2.png" >
+						</div>
+						<div class="c_userbox">
+							<div class="avatars">
+								<img class="avatar" v-if="item.picurl" :src="item.picurl">
+								<img class="avatar" v-else src="img/qrcode.jpg">
+							</div>
+							<div>
+								<p class="nickname">{{item.username}}</p>
+								<p class="createtime">{{item.createtime | filterFun}}</p>
+							</div>
+
+						</div>
+						<div class="pd">
+							<div class="c_title">{{item.title}}</div>
+							<div class="c_intro">
+								<div>内容简介</div>
+								{{item.fundcontent}}
+
+							</div>
+							<div>众筹金额：{{item.money}}元</div>
+							<div>当前进度：{{item.nowmoney}}元</div>
+							<div>平台认证：
+								<span class="allow" v-if="item.status != 1">通过认证</span>
+								<span class="waitallow" v-else>等待认证</span>
+								</div>
+							<div>回报情况：{{item.huibao}}</div>
+							<div class="biaoqian">
+								<span class="fui-tag"></span>
+								<span>{{item.keys}}</span>
+							</div>
+							<div v-if="cur!=4 && cur != 1" @click.stop="gobusinessplain(item.id,item.status)" class="lookdetail">查看商业计划书</div>
+							
+							
+							<button v-if="self==1 && item.status ==2 " @click.stop="agree(item.id)" class="btn">确认完成</button>
+							<button v-if="self==1 &&  item.status == 1" @click.stop="deletefile(item.id)" class="btn">删除</button>
+							<button v-if="self==1 && item.status ==2 " @click.stop="showdialog(item.id)" class="btn">修改资金使用</button>
+							
+							
+							
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- 用户登录模态框 -->
+			<div class="remodal" data-remodal-id="user-login-modal">
+				<h1>Welcome!</h1>
+				<p><strong>[ 欢迎来到众筹 ]</strong></p>
+				<div id="user-login-form">
+					<div class="form-group">
+						<input type="email" v-model="email" placeholder="邮箱地址" class="form-control" id="username" name="username" style="width: 260px;margin:0 auto">
+					</div>
+					<div class="form-group">
+						<input type="password" v-model="password" placeholder="密码" class="form-control" id="password" name="password"
+						 style="width: 260px;margin:0 auto">
+					</div>
+					<button class="btn btn-primary btn-embossed" @click="login" style="width: 260px;">登　录</button>
+				</div>
+				<p style="margin-top:15px;margin-bottom:0">还没有账号？<a data-remodal-target="user-register-modal" style="cursor:pointer;">注册</a></p>
+			</div>
+			<!-- 注册模态框 -->
+			<div class="remodal" data-remodal-id="user-register-modal">
+				<h1>注册账号!</h1>
+				<!-- 若想要验证邮箱，把div换成form即可 -->
+				<div id="user-register-form">
+					<div class="form-group">
+
+						<input v-model="remail" type="text" placeholder="你的邮箱地址" class="form-control" id="email" name="email" style="width:260px;margin:20px auto">
+						<input v-model="rpassword" type="text" placeholder="密码" class="form-control" style="width:260px;margin:30px auto">
+						<input v-model="nickname" type="text" placeholder="昵称" class="form-control" style="width:260px;margin:0 auto">
+					</div>
+					<button @click="resigiter" class="btn btn-primary btn-embossed" type="submit" style="width: 260px;">注 册</button>
+				</div>
+				<p style="margin-top:15px;margin-bottom:0">已有账号？<a data-remodal-target="user-login-modal" style="cursor:pointer;">登录</a></p>
+			</div>
+			<el-dialog
+			title="提示"
+			:visible.sync="dialong"
+			width="30%"
+			>
+			<div>请输入资金使用计划</div>
+		   <el-input type="textarea" v-model="useplain" ></el-input>
+			<span slot="footer" class="dialog-footer">
+			  <el-button @click="dialong = false">取 消</el-button>
+			  <el-button type="primary" @click="modifytext">确 定</el-button>
+			</span>
+		  </el-dialog>
+		</div>
+
+	</body>
+
+	<script>
+		var VM = new Vue({
+			el: '#app',
+			data: {
+				username: '', //页面显示的用户名
+				email: '',//登录邮箱
+				password: '',//登录密码
+				remail: '',//注册
+				id:'',
+				dialong:false,
+				useplain:'',
+				rpassword: '',//注册
+				nickname: '',//昵称
+				list: [],//页面渲染用的列表
+				user:{},//用户信息
+				self:'',//是否显示完成或删除
+				searchval:'',//搜索框的值
+				cur:2,//点击导航切换
+				searchlist:[],//搜索使用的数组
+			},
+			methods: {
+				// 退出登录
+				logout() {
+					this.username = ''
+					localStorage.setItem('user', '')
+				},
+				login() {
+					if (!this.email) {
+						app.error('请填写邮箱')
+						return
+					}
+					if (!this.password) {
+						app.error('请填写密码')
+						return
+					}
+					// 如果是管理员就去单独的审核页面,admin 123456
+					if(this.email == 'admin' && this.password =='123456'){
+						window.open('admin.html')
+						return
+					}
+					app.request('login', {
+						password: this.password,
+						email: this.email
+					}, (res) => {
+						app.alert('成功登陆')
+						this.username = res.data.nickname
+						this.user = res.data
+						localStorage.setItem('user', JSON.stringify(res.data))
+					})
+				},
+				// 去平台页面
+				gopingtai(){
+					location.href = 'pingtai.html'
+				},
+				modifytext(id){
+					app.request('updateuseplain',{useplain:this.useplain,id:this.id},res=>{
+						app.alert('资金使用说明修改成功')
+						this.dialong = false
+					})
+				},
+				// 注册
+				resigiter() {
+					if (!this.remail) {
+						app.error('请填写邮箱')
+						return
+					}
+					if (!this.rpassword) {
+						app.error('请填写密码')
+						return
+					}
+					if (!this.nickname) {
+						app.error('请填写昵称')
+						return
+					}
+					app.request('register', {
+						password: this.rpassword,
+						email: this.remail,
+						nickname: this.nickname
+					}, (res) => {
+						app.alert('注册成功')
+					})
+				},
+				// 导航切换
+				changetab(i){
+					this.cur = i
+					if(i == 4){
+						this.clickme()
+					}else{
+						this.getlist()
+					}
+				},
+				showdialog(id){
+					this.id = id
+					this.dialong = true
+				},
+				// 发起项目
+				createProject() {
+					if (!this.username) {
+						app.error('登陆后才可以发布')
+						return
+					}
+					window.open('createfunding.html')
+				},
+				// 查找
+				search(){
+					// 前端简单处理
+					let arr = []
+					let temp = this.searchlist
+					temp.forEach((v,i)=>{
+					
+						if(v.username.indexOf(this.searchval) != -1 || v.keys.indexOf(this.searchval) != -1){
+							
+							arr.push(v)
+						}
+					})
+					if(arr.length>0){
+						this.list = arr
+					}else{
+						app.error('没有匹配数据')
+					}
+				},
+				// 去众筹详情
+				gotodetail(id,status){
+					
+					if(status == 1){
+						
+						app.error('项目未审核，不可查看')
+						return
+					}
+					// if(status == 3){
+						
+					// 	app.error('项目已完成')
+					// 	return
+					// }
+					localStorage.setItem('articleid',id)
+					location.href = 'detail.html'
+				},
+				gobusinessplain(id,status){
+					if(status == 1){
+						
+						app.error('项目未审核，不可查看')
+						return
+					}
+				
+					localStorage.setItem('articleid',id)
+					location.href = 'businessplain.html'
+				},
+
+				// 众筹列表
+				getlist() {
+					let data = {}
+					if(this.cur >0){
+						data.status = this.cur
+					}
+			
+					
+					app.request('getfundinglist', data, (res) => {
+						
+						this.list = res.data
+							// 为了便于模拟搜索,还需要定一个数组,存放所有的众筹项目
+							this.searchlist = res.data
+						
+					})
+				},
+				// 确认完成
+				agree(id){
+					app.request('statusend',{id},(res)=>{
+						app.alert('操作成功')
+						this.clickme()
+					})
+				},
+				// 删除项目
+				deletefile(id){
+					app.request('deletefunding',{id},(res)=>{
+						app.alert('删除成功')
+						this.clickme()
+					})
+				},
+				// 我的项目
+				clickme(){
+					if(!this.username){
+						app.error('登陆后才可以查看')
+						return
+						
+					}
+					let data = {
+						id:this.user.id
+					}
+					app.request('getfundinglist', data, (res) => {
+						this.list = res.data
+					
+						this.self = res.self
+					})
+					
+				}
+			},
+			mounted() {
+				if (localStorage.getItem('user')) {
+					var user = JSON.parse(localStorage.getItem('user'))
+					this.username = user.nickname
+					this.user = user
+				}
+				this.getlist()
+			},
+			filters: {
+				filterFun(v) {
+                   
+					return app.formarTime(Number(v))
+				},
+			}
+		})
+		// app.request("beadhouse/getshebei",{},(res)=>{
+		// 	console.log(res)
+		// })
+	</script>
+</html>

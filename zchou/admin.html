@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head lang="zh-cn">
+		<meta charset="utf-8">
+		<title>众筹 | zChou</title>
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+		<script src="js/jquery.min.js"></script>
+		<link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="./css/flat-ui.css">
+		<link rel="stylesheet" type="text/css" href="./css/zchou.css">
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<script src="js/bootstrap.js"></script>
+	
+		<script src="js/jquery.remodal.js"></script>
+		<script src="js/all.js"></script>
+		<script src="js/vue.js"></script>
+	</head>
+<style type="text/css">
+	.content{
+		padding-top: 60px;
+	}
+	.content_warp {
+		width: 90%;
+		margin: 0 auto;
+	
+	}
+	
+	.list_view {
+		position: relative;
+		background: #fff;
+		margin-top: 30px;
+		width: 350px;
+		height: 580px;
+		float: left;
+	  
+		margin-right: 60px;
+		transition: all .2s ease-in-out;
+	}
+	.list_view:hover{
+		cursor: pointer;
+		box-shadow:  0 0 7px 7px #ddd;
+		transform: scale(1.08);
+		transition: all .2s ease-in-out;
+	}
+	
+	.c_top {
+		z-index: 0;
+		width: 100%;
+		height: 100px;
+		background: red url(img/12.jpg) no-repeat 100% 60%;
+	}
+	
+	.c_userbox {
+		clear: both;
+		width: 100%;
+		margin-top: -100px;
+		display: flex;
+		padding: 50px 40px 0px;
+		align-items: center;
+	}
+	
+	.avatar {
+		border: 3px solid #fff;
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		margin-right: 18px;
+	}
+	
+	.nickname {
+		font-size: 20px;
+		color: #fff;
+	}
+	
+	.createtime {
+		font-size: 14px;
+	}
+	
+	.pd {
+		padding: 0 20px 0 24px;
+	}
+	
+	.c_title {
+		margin: 10px 0;
+	
+		font-size: 24px;
+		color: #101010;
+	}
+	
+	.c_intro {
+		border-bottom: 1px solid #CCC;
+		font-size: 16px;
+		max-height: 160px;
+		overflow: hidden;
+	
+	}
+	.biaoqian{
+		margin-top: 20px;
+	}
+	.status_img{
+		position: absolute;
+		right: 0;
+		width: 70px;
+		height: 70px;
+	}
+.btn{
+	margin: 10px auto;
+background: #34495E;
+color: #fff;
+	
+}
+	[v-cloak]{
+		display: none;
+	}
+</style>
+	<body>
+		<div id="app" v-cloak>
+			<div class="mc_background remodal-bg">
+				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+					<div class="container">
+						<div class="navbar-header">
+
+							<a class="navbar-brand" href="#">众筹平台</a>
+						</div>
+						<div class="collapse navbar-collapse" id="navbar-collapse">
+
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									<a href="#">
+										<span class="fui-user" title="用户"></span>
+										<span style="margin-left: 4px;">{{username}}</span>
+									</a>
+								</li>
+
+								<li>
+									<a href="index.html">
+										<span class="fui-exit" title="返回首页"></span>
+										<span style="margin-left: 4px;">返回首页</span>
+									</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+				</nav>
+          <div class="content">
+			  <div class="content_warp">
+				  <div v-if="list.length==0">暂无数据</div>
+			  	<div class="list_view" @click="gotodetail(item.id,item.status)"   v-for="(item,index) in list" :key="index">
+			  		<div class="c_top">
+			  			<img class="status_img" v-if="item.status == 1" src="img/state3.png" >
+			  			<img class="status_img" v-if="item.status == 2" src="img/state1.png" >
+			  			<img class="status_img" v-if="item.status == 3" src="img/state2.png" >
+			  		</div>
+			  		<div class="c_userbox">
+			  			<div class="avatars">
+			  				<img class="avatar" v-if="item.picurl" :src="item.picurl">
+			  				<img class="avatar" v-else src="img/pic.png">
+			  			</div>
+			  			<div>
+			  				<p class="nickname">{{item.username}}</p>
+			  				<p class="createtime">{{item.createtime | filterFun}}</p>
+			  			</div>
+			  
+			  		</div>
+			  		<div class="pd">
+			  			<div class="c_title">{{item.title}}</div>
+			  			<div class="c_intro" v-html="item.intro"></div>
+			  			<div style="margin:10px 0;">众筹金额：{{item.money}}</div>
+			  			<div>回报情况：{{item.huibao}}</div>
+			  			<div class="biaoqian">
+			  				<span class="fui-tag"></span>
+			  				<span>{{item.keys}}</span>
+			  			</div>
+						<button @click="agree(item.id)" class="btn">同意申请</button>
+						<br>
+						<button @click="deletefile(item.id)" class="btn">拒绝申请</button>
+						
+			  		</div>
+			       
+			  	</div>
+			  </div>
+		  </div>
+
+
+		</div>
+		<div id="ueditor"></div>
+		</div>
+	</body>
+
+	<script>
+		var VM = new Vue({
+			el: '#app',
+			data: {
+			 username:'超级管理员',
+			 list:[]
+			},
+			methods: {
+			
+				agree(id){
+					
+					app.request('updatestatus',{id},(res)=>{
+						app.alert('通过审核')
+						this.getlist()
+					})
+				},
+				deletefile(id){
+					
+					app.request('deletefunding',{id},(res)=>{
+						app.alert('拒绝成功')
+						this.getlist()
+					})
+				},
+				gotodetail(id,status){
+				
+					localStorage.setItem('articleid',id)
+					location.href = 'detail.html'
+				},
+				getlist(){
+					app.request('getfundinglist',{status:1},(res)=>{
+						this.list = res.data
+					})
+				}
+			},
+			mounted() {
+				app.alert('欢迎来到超级管理员页面',3000)
+				if (localStorage.getItem('user')) {
+					var user = JSON.parse(localStorage.getItem('user'))
+					this.username = user.nickname
+				}
+				this.getlist()
+			}
+		})
+		
+	</script>
+</html>

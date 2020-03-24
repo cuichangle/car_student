@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head lang="zh-cn">
+		<meta charset="utf-8">
+		<title>众筹 | zChou</title>
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+		<script src="js/jquery.min.js"></script>
+		<link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="./css/flat-ui.css">
+		<link rel="stylesheet" type="text/css" href="./css/zchou.css">
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<script src="js/bootstrap.js"></script>
+		<script src="http://jssdk-v2.demo.qiniu.io/dist/qiniu.min.js"></script>
+		<script src="js/jquery.remodal.js"></script>
+		<script src="js/all.js"></script>
+		<script src="js/vue.js"></script>
+	</head>
+	<style type="text/css">
+		.content {
+			width: 80%;
+			margin: 0 auto;
+			padding: 60px 80px;
+			display: flex;
+			justify-content: space-between;
+		}
+		.welcome{
+			margin-left: 30px;
+			font-size: 40px;
+			color: #34495e;
+			font-weight: bold;
+			background: #fff;
+		flex: 1;
+			height: 400px;
+			text-align: center;
+			line-height: 400px;
+		}
+		.list_warp{
+			background: #fff;
+			padding-bottom: 40px;
+			
+		}
+		.usercontent{
+			width: 400px;
+		}
+		.info_top{
+			text-align: center;
+			height: 150px;
+			padding-top: 30px;
+			background: url(img/12.jpg)no-repeat 50% 50%;
+		}
+		.avatar{
+			
+			width: 70px;
+			height: 70px;
+			border-radius: 70px;
+		}
+		.list_view{
+			text-align: center;
+			height: 60px;
+			line-height: 60px;
+			border-bottom: 1px solid #ccc;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<div class="mc_background remodal-bg">
+				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+					<div class="container">
+						<div class="navbar-header">
+
+							<a class="navbar-brand" href="#">众筹平台</a>
+						</div>
+						<div class="collapse navbar-collapse" id="navbar-collapse">
+
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									<a href="#">
+										<span class="fui-user" title="用户"></span>
+										<span style="margin-left: 4px;">{{username}}</span>
+									</a>
+								</li>
+
+								<li>
+									<a href="index.html">
+										<span class="fui-exit" title="返回首页"></span>
+										<span style="margin-left: 4px;">返回首页</span>
+									</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div class="content">
+					<div v-if="username" class="usercontent">
+						<div class="userbox">
+							<div class="list_warp">
+								<div class="info_top">
+									<img class="avatar" v-if="user.pic" :src="user.pic" >
+									<img class="avatar" v-else src="img/pic.png" >
+									<p style="color: #fff;">{{username}}</p>
+								</div>
+								<div class="list_view">
+									{{user.email}}
+								</div>
+								<div class="list_view">
+									简介：众筹用户
+								</div>
+								<div class="list_view">
+									个性标签
+								</div>
+								<div class="list_view">
+									个性签名
+								</div>
+								<div class="list_view">
+									众筹内容
+								</div>
+								<div class="list_view">
+									点击下方修改头像
+								</div>
+								
+							</div>
+							<div>
+								<p>选择头像</p>
+							<input @change="upload"   type="file" ref="files" >
+								
+									</div>
+						</div>
+					</div>
+					<div class="welcome">
+						
+						欢迎来到众筹用户中心
+						
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</body>
+
+	<script>
+		var VM = new Vue({
+			el: '#app',
+			data: {
+				username: '',
+				
+				uploadurl: app.uploadurl,
+				userimg: '',
+				user:{},
+
+			},
+			methods: {
+			
+				upload() {
+					let that = this
+					var files = this.$refs.files.files[0]
+				
+
+					var fileName = files.name;
+					var qiniuKey = `zhongchou/image/${new Date().getMonth()+1}/${new Date().getTime()}.png`
+					var observer = {
+
+						error(err) {
+							console.log(err.message)
+						},
+						// 上传完成回调
+						complete(res) {
+							console.log(res.key)
+							
+							that.user.pic = app.uploadurl+res.key
+							that.savepic()
+							localStorage.setItem('user',JSON.stringify(that.user))
+							that.updateall()
+
+						}
+					};
+					var putExtra = {
+						fname: "",
+						params: {},
+						mimeType: null
+					};
+					var config = {
+						concurrentRequestLimit: 2
+					};
+					var observable = qiniu.upload(files, qiniuKey, this.token, putExtra, config);
+					var subscription = observable.subscribe(observer);
+
+
+				},
+				// 保存用户头像
+				savepic(){
+					let data = {
+						pic:this.user.pic,
+						id:this.user.id
+					}
+					app.request('saveavatar',data,(res)=>{
+						app.alert('头像修改成功')
+					})
+				},
+					// 修改其他的
+				updateall(){
+					let data = {
+						pic:this.user.pic,
+						name:this.user.nickname
+					}
+					app.request('updateall',data,(res)=>{
+					})
+				},
+				login() {
+					if (!this.email) {
+						app.error('请填写邮箱')
+						return
+					}
+					if (!this.password) {
+						app.error('请填写密码')
+						return
+					}
+					app.request('login', {
+						password: this.password,
+						email: this.email
+					}, (res) => {
+						app.alert('成功登陆')
+						this.username = res.data.nickname
+						localStorage.setItem('user', JSON.stringify(res.data))
+					})
+				},
+
+				gettoken() {
+					app.request('uploadtoken', {}, (res) => {
+						this.token = res.data
+					})
+				},
+				resigiter() {
+					if (!this.remail) {
+						app.error('请填写邮箱')
+						return
+					}
+					if (!this.rpassword) {
+						app.error('请填写密码')
+						return
+					}
+					if (!this.nickname) {
+						app.error('请填写昵称')
+						return
+					}
+					app.request('register', {
+						password: this.rpassword,
+						email: this.remail,
+						nickname: this.nickname
+					}, (res) => {
+						app.alert('注册成功')
+					})
+				}
+			},
+			mounted() {
+			
+				if (localStorage.getItem('user')) {
+					var user = JSON.parse(localStorage.getItem('user'))
+					this.user = user
+					this.username = user.nickname
+				}
+				this.gettoken()
+			}
+		})
+	</script>
+</html>

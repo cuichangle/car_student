@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+	<head lang="zh-cn">
+		<meta charset="utf-8">
+		<title>众筹 | zChou</title>
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+		<script src="js/jquery.min.js"></script>
+		<link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="./css/flat-ui.css">
+		<link rel="stylesheet" type="text/css" href="./css/zchou.css">
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<script src="js/bootstrap.js"></script>
+	
+		<script src="js/jquery.remodal.js"></script>
+		<script src="js/all.js"></script>
+		<script src="js/vue.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	</head>
+<style type="text/css">
+	.content{
+		padding: 80px 0 60px;
+		width: 72%;
+		margin: 0 auto;
+		display: flex;
+		
+	}
+	.c_top{
+		height: 150px;
+		line-height: 150px;
+		text-align: center;
+	font-size: 36px;
+		background:#34495e ;
+		color: #fff;
+	}
+	.c_left{
+		background: #fff;
+		position: relative;
+		flex: 1;
+		margin-right: 100px;
+	}
+	.c_right{
+		width: 400px;
+		height: 100px;
+	}
+	.pinglun{
+		background: #34495E;
+		height: 75px;
+		color: #FFF;
+		font-size: 30px;
+		text-align: center;
+		line-height: 75px;
+	}
+	.statusimg{
+		width: 80px;
+		height: 80px;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	.avatarbox{
+		text-align: center;
+	}
+	.avatar{
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+	}
+	.usermain{
+		padding: 0 30px;
+		margin-top: -40px;
+	}
+	.flexbox{
+		/* padding: 0 100px; */
+		display: flex;
+		color: #34495E;
+		font-size: 16px;
+		justify-content: space-between;
+	}
+	.p_name{
+		display: flex;
+		align-items: center;
+		font-size: 20px;
+		font-weight: bold;
+		color: #34495E;
+	}
+	.smallavatar{
+		margin-right: 7px;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+	}
+		
+	.p_comment{
+		font-size: 16px;
+		color: #34495E;
+		margin: 16px 0;
+	}
+	.r_content{
+		background: #FFF;
+		padding: 16px 24px;
+	}
+	.textarea{
+		width: 100%;
+		height: 100px;
+	}
+	.btn{
+		width: 100%;
+		margin: 0 auto;
+		background: #34495E;
+		color: #fff;
+	    
+	}
+	.list_view{
+		padding: 18px 0;
+		border-top: 1px solid #ccc;
+	}
+		.allow{
+			font-size: 18px;
+			font-weight: 600;
+		color: rgb(60, 226, 60);
+	}
+	.waitallow{
+		font-size: 18px;
+			font-weight: 600;
+		color: rgb(221, 221, 70);
+	}
+	.qrcode{
+		width: 100px;
+		height: 100px;
+	}
+	[v-cloak]{
+		display: none;
+	}
+</style>
+	<body>
+		<div id="app" v-cloak >
+			<div class="mc_background remodal-bg">
+				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+					<div class="container">
+						<div class="navbar-header">
+
+							<a class="navbar-brand" href="#">众筹平台</a>
+						</div>
+						<div class="collapse navbar-collapse" id="navbar-collapse">
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									<a href="#">
+										<span class="fui-user" title="用户"></span>
+										<span style="margin-left: 4px;">{{username}}</span>
+									</a>
+								</li>
+								<li>
+									<a href="index.html">
+										<span class="fui-exit" title="返回首页"></span>
+										<span style="margin-left: 4px;">返回首页</span>
+									</a>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+				</nav>
+            <div class="content">
+			
+				<div class="c_left">
+					<div class="c_top">
+						{{info.title}}
+						<img v-if="info.status == 1" class="statusimg" src="./img/state3.png" >
+						<img v-if="info.status == 2" class="statusimg" src="./img/state1.png" >
+						<img v-if="info.status == 3" class="statusimg" src="./img/state2.png" >
+					</div>
+					<div class="usermain">
+						<div class="avatarbox">
+							<img class="avatar" v-if="info.picurl" :src="info.picurl" >
+							<img class="avatar" v-else src="./img/qrcode.jpg" >
+						</div>
+						<div class="flexbox">
+							<div>发起人：{{info.username}}</div>
+							<div>发起时间：{{info.createtime|filterFun}}</div>
+						</div>
+						<p style="font-size: 24px; font-weight: bold;">我想做什么</p>
+						<div>{{info.fundcontent}}</div>
+						<div style="font-size: 18px; font-weight: bold;">筹资目标：{{info.money}}</div>
+						<div style="font-size: 18px; font-weight: bold;">回报收益：{{info.huibao}}</div>
+						<div style="font-size: 18px; font-weight: bold;">当前进度：{{info.nowmoney}}</div>
+						<div  style="font-size: 18px; font-weight: bold;" >平台认证：
+							<span class="allow" v-if="info.status != 1">通过认证</span>
+							<span class="waitallow" v-else>等待认证</span>
+						</div>
+						<div style="font-size: 18px; font-weight: bold;">资金使用：{{!info.usepalin?'暂无使用情况说明':info.usepalin}}</div>
+						<div style="font-size: 18px; font-weight: bold;">收款账号：{{info.phone}}</div>
+						<div style="font-size: 18px; font-weight: bold;">标签：{{info.keys}}</div>
+						<el-button @click='dialogVisible= true' style="margin-top: 10px" type="info">助力圆梦</el-button>
+					</div>
+				</div>
+				<div class="c_right">
+					<div class="pinglun">评论</div>
+					<div class="r_content">
+						<textarea  v-model="content" class="textarea">
+							
+						</textarea>
+						<button class="btn" @click="sendcomment">发送评论</button>
+						<div v-if="list.length>0">
+						<div v-for="(item,index) in list" :key="index" class="list_view">
+							<div class="p_name">
+								<img class="smallavatar" v-if="item.pic" :src="item.pic" >
+								<img class="smallavatar" v-else src="./img/qrcode.jpg" >
+								<div>{{item.username}}</div>
+							</div>
+							<div  class="p_comment">{{item.content}}</div>
+							<div style="text-align: right;">{{item.createtime|filterFun}}</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		<el-dialog
+  title="模拟支付"
+  :visible.sync="dialogVisible"
+  width="30%"
+  >
+  <div>
+	  <div>方式1 扫码支付</div>
+	 <img class="qrcode" src="img/qrcode.jpg" alt="">
+	<div>或者输入数字支付</div>
+	<el-input-number v-model="money" :step="1"></el-input-number>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="addmoney">确 定</el-button>
+  </span>
+</el-dialog>
+		</div>
+	</body>
+
+	<script>
+		var VM = new Vue({
+			el: '#app',
+			data: {
+			 username:'',
+			 info:{},
+			 money:2,
+			 list:[],
+			 dialogVisible:false,
+			 content:'',
+			 user:{},
+			 id:'',//文章id
+			},
+			methods: {
+			
+				
+				sendcomment() {
+					if(!this.username){
+						app.error('登陆后可发表评论')
+						return
+					}
+					if (!this.content) {
+						app.error('请填写评论内容')
+						return
+					}
+					
+					let data = {
+						articleid:this.id,
+						username:this.user.nickname,
+						pic:this.user.pic,
+						content:this.content,
+					}
+					
+					app.request('createcomment', data, (res) => {
+						app.alert('成功评论')
+						this.getcomment()
+					})
+				},
+				getcomment(){
+					app.request('selectcomment', {articleid:this.id}, (res) => {
+						this.list = res.data.reverse()
+					})
+				},
+				getdetail(){
+					
+					app.request('zcdetail',{id:this.id},(res)=>{
+						this.info = res.data
+						console.log(this.info)
+					})
+					
+				},
+				addmoney(){
+					app.request('modifydetail',{id:this.id,price:this.money},(res)=>{
+						this.info.nowmoney =this.info.nowmoney+ this.money
+						this.$message.success('助力成功')
+						this.dialogVisible = false
+					})
+				}
+				
+			},
+			mounted() {
+				this.id = localStorage.getItem('articleid')
+				if (localStorage.getItem('user')) {
+					var user = JSON.parse(localStorage.getItem('user'))
+					this.username = user.nickname
+					this.user = user
+				}
+				this.getdetail()
+				this.getcomment()
+			},
+			filters: {
+				filterFun(v) {
+			       
+					return app.formarTime(Number(v))
+				},
+			}
+		})
+		
+	</script>
+</html>

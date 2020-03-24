@@ -1,0 +1,33 @@
+<wxs src="../../utils/filter.wxs" module="filter" ></wxs>
+<view>
+      <map
+      id="myMap"
+      enable-overlooking="{{true}}"
+      enable-zoom="{{true}}"
+      style="width: 100%; height: 100vh;"
+      latitude='{{latitude}}'
+      longitude='{{longitude}}'
+      scale="{{mapScale}}"
+   
+     markers="{{markers}}"
+      bindtap='bindMap'
+      bindmarkertap="bindParkMarkerTap"
+      
+    ></map>
+        <van-popup
+  show="{{ showprop }}"
+  closeable
+  close-icon="close"
+  position="bottom"
+  bind:close="onClose"
+>
+<view class="content">
+  <view class="long">当前经度：{{long}}</view>
+  <view class="long">当前维度:{{lat}}</view>
+  <input class="keyads" placeholder="请输入名称 如 教学楼1-1" value="{{name}}" bindinput="changeipt" ></input>
+  <view class="addaddress" bindtap="addParkingLot" >添加停车位</view>
+</view>
+</van-popup>
+
+
+</view>

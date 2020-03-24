@@ -1,0 +1,22 @@
+Page{
+}
+.main{
+  text-align: center;
+}
+.top{
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  box-sizing: border-box;
+  padding: 20rpx 30rpx;
+  color: #fff;
+  font-size: 28rpx;
+  background: rgba(0,0,0,.4);
+  border-bottom: 2px solid #eee;
+}
+.top_flex{
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  display: flex;
+  justify-content: space-between;
+}

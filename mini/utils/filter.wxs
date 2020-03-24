@@ -1,0 +1,7 @@
+var filter = {
+  tofixed6:function(v){
+    return Number(v).toFixed(6)
+  }
+  
+}
+module.exports = filter

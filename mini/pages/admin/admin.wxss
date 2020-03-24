@@ -1,0 +1,25 @@
+.content{
+  color: #959595;
+  padding: 40rpx  40rpx 60rpx;
+  box-sizing: border-box;
+}
+.addaddress{
+  width: 70%;
+  margin: 0 auto;
+  height:70rpx;
+  background:linear-gradient(90deg,rgba(1,202,255,1),rgba(67,143,252,1));
+  border-radius:35rpx;
+  text-align: center;
+  line-height: 70rpx;
+  color: #ffffff;
+  margin-top: 40rpx;
+  font-size:32rpx;
+}
+.long{
+  margin-top: 20rpx;
+}
+.keyads{
+  margin-top: 20rpx;
+  border-bottom: 1px solid #eee;
+  padding: 10rpx 20rpx;
+}

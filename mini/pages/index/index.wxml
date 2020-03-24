@@ -1,0 +1,31 @@
+<view>
+    <cover-view class="top">
+       <cover-view class='explain'>平台说明：{{explain}}</cover-view>
+       <cover-view class='top_flex'>
+          <cover-view class='allcount'>车位数量：{{allcount}}</cover-view>
+          <cover-view class='allcount'>占用：{{usecount}} 剩余：{{allcount-usecount}}</cover-view>
+       </cover-view>
+    </cover-view>
+    <map
+      id="myMap"
+      enable-overlooking="{{true}}"
+      enable-zoom="{{true}}"
+      style="width: 100%; height: 100vh;"
+      latitude='{{latitude}}'
+      longitude='{{longitude}}'
+   
+     markers="{{markers}}"
+      bindtap='bindMap'
+      bindmarkertap="bindParkMarkerTap"
+      
+    ></map>
+    <van-popup
+  show="{{ showprop }}"
+  closeable
+  close-icon="close"
+  position="bottom"
+  custom-style="height: 20%"
+  bind:close="onClose"
+/>
+   <login bind:cancelLogin="getchildren" wx:if="{{islogin}}" ></login>
+</view>
