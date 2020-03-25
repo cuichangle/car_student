@@ -1,9 +1,15 @@
 <view>
     <cover-view class="top">
-       <cover-view class='explain'>平台说明：{{explain}}</cover-view>
+       <cover-view class='explain'>
+       <cover-view wx:if="{{minutes>0}}">停车时间少于{{minutes}}分钟不收费；</cover-view>
+       
+       
+       停车每小时费用{{hourcost}}元，
+       
+        </cover-view>
        <cover-view class='top_flex'>
-          <cover-view class='allcount'>车位数量：{{allcount}}</cover-view>
-          <cover-view class='allcount'>占用：{{usecount}} 剩余：{{allcount-usecount}}</cover-view>
+          <cover-view class='allcount'>车位数量：{{markers.length}}</cover-view>
+          <cover-view class='allcount'>占用：{{usecount}} 剩余：{{markers.length-usecount}}</cover-view>
        </cover-view>
     </cover-view>
     <map
@@ -13,19 +19,34 @@
       style="width: 100%; height: 100vh;"
       latitude='{{latitude}}'
       longitude='{{longitude}}'
-   
+      scale="{{mapScale}}"
      markers="{{markers}}"
       bindtap='bindMap'
       bindmarkertap="bindParkMarkerTap"
       
     ></map>
-    <van-popup
-  show="{{ showprop }}"
-  closeable
-  close-icon="close"
-  position="bottom"
-  custom-style="height: 20%"
-  bind:close="onClose"
-/>
+<van-overlay show="{{ showprop }}" bind:click="onClickHide">
+  <view class="wrapper">
+    <view class="block" catch:tap="noop" >
+    <view wx:if="{{adsinfo}}" class="warp_title">
+      {{adsinfo.title}}
+    
+    </view>
+    <view class="warn">
+      <view class="warn_title">温馨提示</view>
+      <view>为了避免到达目的地后车位被别人使用，请务必第一时间选择使用该车位</view>
+    </view>
+    <view class="flexbox">
+      <button size="mini" bindtap="onClickHide" >取消</button>
+      <button size="mini" bindtap="useparking" >使用</button>
+
+ 
+  <button type="primary" bindtap="doRuleAds" size="mini">导航</button>
+    </view>
+
+
+    </view>
+  </view>
+</van-overlay>
    <login bind:cancelLogin="getchildren" wx:if="{{islogin}}" ></login>
 </view>

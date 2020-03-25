@@ -60,7 +60,7 @@ App({
  
     let promise = new Promise((resolve,reject)=>{
     wx.request({
-      url: 'http://localhost:4000/'+url,
+      url: 'http://192.168.1.189:4000/'+url,
       data:parm,
       method: methodType,
       header:{

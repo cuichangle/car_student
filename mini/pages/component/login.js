@@ -21,9 +21,15 @@ Component({
       let info = e.detail.userInfo
       
       if(info){
+        app.load()
         app.globalData.userInfo = info
         app.saves('userInfo',info)
-        this.triggerEvent('cancelLogin', { dialog: false, cancel: false });
+        app.request('register',{nickname:info.nickName,avatar:info.avatarUrl}).then(res=>{
+          app.hide()
+          console.log(res)
+          this.triggerEvent('cancelLogin', { dialog: false, cancel: false });
+
+        })
       }
     },
     // 取消授权

@@ -9,6 +9,9 @@ Page({
     long:'',
     name:'',
     lat:'',
+    minutes:'',
+    hourcost:'',
+    showprice:false,
     showprop: false, // 底部弹框
 
   },
@@ -52,6 +55,28 @@ Page({
 
 
   },
+  // 设置免费时间
+  changeMinutes(e){
+    this.setData({
+      minutes:e.detail.value
+    })
+  },
+  changeHourcost(e) {
+    this.setData({
+      hourcost: e.detail.value
+    })
+  },
+  // 获得默认价格
+  getprice(){
+    app.request('getprice',{}).then(res=>{
+      if(res.data.length){
+        this.setData({
+          minutes:res.data[0].minutes,
+          hourcost:res.data[0].hourcost
+        })
+      }
+    })
+  },
   // 删除停车位
   deletePark(id){
       app.request('deleteParkingLot', { id: id }).then(res => {
@@ -66,6 +91,30 @@ Page({
    this.setData({
      name:e.detail.value
    })
+  },
+  setting(){
+    this.setData({
+      showprice:!this.data.showprice
+    })
+  },
+  submitPrice(){
+    let {minutes,hourcost} = this.data
+    if(!minutes || !hourcost){
+      app.toast('信息不完善')
+      return
+    }
+    let data = {
+      minutes,
+      hourcost
+    }
+    app.request('settingprice',data).then(res=>{
+      this.setData({
+        showprice:false,
+        showprop:false
+      })
+      app.toast('设置成功')
+    })
+
   },
   // 添加停车位
   addParkingLot(){
@@ -127,6 +176,8 @@ Page({
    */
   onLoad: function (options) {
     this.getParkingLot()
+    this.getprice()
+
   },
 
   /**
@@ -140,7 +191,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
   },
 
   /**

@@ -1,8 +1,13 @@
+Page{
+   background:linear-gradient(to bottom right,#686b6a,rgb(58, 235, 220));
+   color: #fff;
+}
 .top{
   box-sizing: border-box;
   padding: 40rpx;
+  color: #fff;
   text-align: center;
-  background: #eee;
+  
 }
 
 .avatar{
@@ -12,15 +17,15 @@
 }
 .nickname{
   font-size: 40rpx;
-  color: #101010;
   font-weight: 600;
   text-align: center;
   margin-top: 16rpx;
 }
 .list{
-  padding: 40rpx 40rpx;
+  padding: 40rpx 60rpx;
   box-sizing: border-box;
   display: flex;
+  font-weight: 600;
   justify-content: space-between;
   font-size: 32rpx;
   border-bottom: 1px solid #ccc;

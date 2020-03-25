@@ -23,3 +23,19 @@
   border-bottom: 1px solid #eee;
   padding: 10rpx 20rpx;
 }
+.settingprice{
+  color: rgba(67,143,252,1);
+  float: right;
+}
+.p_list{
+  align-items: center;
+  margin-top: 20rpx;
+  display: flex;
+  
+}
+.p_list input{
+  margin-right: 20rpx;
+  width: 50%;
+  border: 1px solid #eee;
+
+}

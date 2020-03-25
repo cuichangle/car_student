@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-   "login":"/pages/component/login",
-   "van-popup": "../../vant/dist/popup"
+   "login":"../pages/component/login",
+   "van-popup": "../../vant/dist/popup",
+    "van-overlay": "../../vant/dist/overlay"
   }
 }

@@ -25,6 +25,7 @@ const location = ()=>{
   wx.getLocation({
     type: 'wgs84',
     success(res) {
+      console.log(res)
       app.globalData.lat = res.latitude,
         app.globalData.lon = res.longitude
     }

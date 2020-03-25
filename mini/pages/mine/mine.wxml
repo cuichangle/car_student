@@ -2,7 +2,6 @@
 <view class="page">
   <view class='top' wx:if="{{userInfo}}" >
     <image src='{{userInfo.avatarUrl}}' class='avatar' ></image>
-    
     <view class='nickname'>{{userInfo.nickName}}</view>
   </view>
   <view class='list'>
@@ -10,6 +9,12 @@
   </view>
   <view class='list'>
      停车记录 <text>></text>
+  </view>
+    <view class='list'>
+     退出登录 <text>></text>
+  </view>
+     <view class='list'>
+     个人资料 <text>></text>
   </view>
   <view class='list'>
      停车费用支出 <text>100</text>

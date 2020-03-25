@@ -44,44 +44,14 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }))
 
-// 登录接口
-app.post('/login', (req, res) => {
-	let info = req.body
-	let sql = `SELECT * from  user where email = '${info.email}' `
-	connection.query(sql, (err, result) => {
-		if (err) {
-			return console.log(err.message)
-		}
-		if (result.length) {
-			if (result[0].password == info.password) {
-				res.send({
-					status: 200,
-					msg: '成功',
-					data: result[0]
-				})
-			} else {
-				res.send({
-					status: 201,
-					msg: '密码错误',
-					data: null
-				})
-			}
-		} else {
-			res.send({
-				status: 201,
-				msg: '账号不存在',
-				data: null
-			})
-		}
 
-	})
-})
+
 // 注册
 app.post('/register', (req, res) => {
 	let info = req.body
 
-	let selectsql = `SELECT * from  user where email = '${info.email}' `
-	connection.query(selectsql, (err, result) => {
+	let sql = `SELECT * from  users where nickname = '${info.nickname}' `
+	connection.query(sql, (err, result) => {
 		if (result.length) {
 			res.send({
 				status: 201,
@@ -90,15 +60,15 @@ app.post('/register', (req, res) => {
 			})
 		} else {
 			let info = req.body
-			let sql = `insert into user set? `
+			let sql = `insert into users set? `
 			connection.query(sql, info, (err, result) => {
 				if (err) {
 					return console.log(err.message)
 				}
 				res.send({
 					status: 200,
-					msg: '注册成功',
-					data: []
+					msg: '注册成功'
+					
 				}
 				)
 
@@ -107,11 +77,80 @@ app.post('/register', (req, res) => {
 	})
 
 })
+// 添加记录
+app.post('/addRecord', (req, res) => {
+	let info = req.body
+	
+	let sql = `insert into record set?`
+	let  updatesql = `update parking set isuse=1 where id =${info.pid}`
+	connection.query(sql, info, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+	
+		connection.query(updatesql, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+     	res.send({
+			status: 200,
+			msg: '成功',
+			data: []
+		})
+	})
 
-// 删除项目
+	})
+})
+// 添加费用
+app.post('/settingprice', (req, res) => {
+	let info = req.body
+	let sql = `update admin set minutes='${info.minutes}',hourcost='${info.hourcost}'`
+	connection.query(sql, info, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+     	res.send({
+			status: 200,
+			msg: '成功',
+			data: []
+	})
+	})
+})
+// 查询费用
+app.post('/getprice', (req, res) => {
+	let info = req.body
+	let sql = `select *  from  admin`
+	connection.query(sql, info, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+     	res.send({
+			status: 200,
+			msg: '成功',
+			data: result
+	})
+	})
+})
+// 删除停车位
 app.post('/deleteParkingLot', (req, res) => {
 
 	let sql = ` delete from parking  where id='${req.body.id}'`
+	connection.query(sql, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+		res.send({
+			status: 200,
+			msg: '删除成功',
+			data: []
+		})
+
+	})
+})
+// 查询用户记录
+app.post('/getusres', (req, res) => {
+
+	let sql = ` select users.nickname,users.avatar,record.end from users,parking where users.nickname = parking.nickname`
 	connection.query(sql, (err, result) => {
 		if (err) {
 			return console.log(err.message)
