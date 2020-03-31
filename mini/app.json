@@ -1,15 +1,17 @@
 {
   "pages": [
+    "pages/users/users",
     "pages/index/index",
+    
+    "pages/records/records",
+    
     
     "pages/admin/admin",
     
     
-    
     "pages/mine/mine",
-    "pages/login/login",
+    "pages/login/login"
     
-    "pages/users/users"
     
     
 

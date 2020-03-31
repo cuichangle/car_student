@@ -4,22 +4,22 @@
     <image src='{{userInfo.avatarUrl}}' class='avatar' ></image>
     <view class='nickname'>{{userInfo.nickName}}</view>
   </view>
-  <view class='list'>
+  <!-- <view class='list'>
      我的车辆 <text>></text>
-  </view>
-  <view class='list'>
+  </view> -->
+  <view bindtap="gorecord" class='list'>
      停车记录 <text>></text>
   </view>
-    <view class='list'>
-     退出登录 <text>></text>
-  </view>
+<!-- 
      <view class='list'>
      个人资料 <text>></text>
-  </view>
+  </view> -->
   <view class='list'>
-     停车费用支出 <text>100</text>
+     停车费用支出 <text>{{allcount}}</text>
   </view>
-    
+        <view bindtap="loginout" class='list'>
+     退出登录 <text>></text>
+  </view>
    <login bind:cancelLogin="getchildren" wx:if="{{islogin}}" ></login>
 </view>
 

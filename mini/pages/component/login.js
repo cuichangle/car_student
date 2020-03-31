@@ -26,7 +26,7 @@ Component({
         app.saves('userInfo',info)
         app.request('register',{nickname:info.nickName,avatar:info.avatarUrl}).then(res=>{
           app.hide()
-          console.log(res)
+        
           this.triggerEvent('cancelLogin', { dialog: false, cancel: false });
 
         })

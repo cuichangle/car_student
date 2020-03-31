@@ -1,1 +1,25 @@
-/* pages/users/users.wxss */
+Page{
+  background: #f3f3f3;
+}
+.list_warp{
+ padding: 10rpx 24rpx;
+}
+.avatar{
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+.list_top{
+  display: flex;
+  align-items: center;
+}
+.list_view{
+ padding: 16rpx 20rpx;
+ border-radius: 10rpx;
+ background: #fff;
+ margin-top: 18rpx;
+ font-size: 28rpx;
+ color: #101010;
+
+}

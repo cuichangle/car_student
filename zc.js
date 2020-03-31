@@ -147,22 +147,7 @@ app.post('/deleteParkingLot', (req, res) => {
 
 	})
 })
-// 查询用户记录
-app.post('/getusres', (req, res) => {
 
-	let sql = ` select users.nickname,users.avatar,record.end from users,parking where users.nickname = parking.nickname`
-	connection.query(sql, (err, result) => {
-		if (err) {
-			return console.log(err.message)
-		}
-		res.send({
-			status: 200,
-			msg: '删除成功',
-			data: []
-		})
-
-	})
-})
 // 添加停车位
 app.post('/addParkingLot', (req, res) => {
 	let info = req.body
@@ -197,8 +182,66 @@ app.post('/getParkingLot', (req, res) => {
 
 	})
 })
+// 查询我的停车记录
+app.post('/getMyRecord', (req, res) => {
+	let sql = `SELECT * FROM record LEFT JOIN parking ON  parking.id = record.pid  WHERE nickname = '${req.body.nickname}'`
+	connection.query(sql, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+		res.send({
+			status: 200,
+			msg: '成功',
+			data: result
+		})
 
+	})
+})
+// 修改结束时间和金额
+app.post('/updateTime', (req, res) => {
+	let sql = `update record set end='${req.body.end}',money='${req.body.money}' where recordid = ${req.body.id}`
+	connection.query(sql, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+		res.send({
+			status: 200,
+			msg: '成功',
+			data: []
+		})
 
+	})
+})
+// 查询我的停车总费用
+app.post('/getAllcount', (req, res) => {
+	let sql = `SELECT sum(money) AS nums from record  WHERE nickname = '${req.body.nickname}'`
+	connection.query(sql, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+		res.send({
+			status: 200,
+			msg: '成功',
+			data: result
+		})
+
+	})
+})
+// 用户列表
+app.post('/getusres', (req, res) => {
+	let sql = `SELECT * FROM users`
+	connection.query(sql, (err, result) => {
+		if (err) {
+			return console.log(err.message)
+		}
+		res.send({
+			status: 200,
+			msg: '成功',
+			data: result
+		})
+
+	})
+})
 
 
 app.listen(4000, () => {

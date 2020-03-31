@@ -1,0 +1,42 @@
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view>
+  <view class="list_warp">
+    <view wx:for="{{list}}" wx:key="index" class="list_view">
+      <view class=" list_top ">
+        <image class="avatar" src="{{item.avatar}}"></image>
+        <view class="nickname">{{item.nickname}}</view>
+      
+      </view>
+      <view class="public">
+        <view class="startime1">开始时间：{{filter.gettime(item.star)}}</view>
+        <view class="startime1"></view>
+
+      </view>
+            <view class="public">
+        <view class="startime1">结束时间：{{item.end?filter.gettime(item.end):'停车中'}}</view>
+        <view class="startime1"></view>
+
+
+      </view>
+      <view class="public list_cen">
+        <view class="carname">停车位名字</view>
+        <view class="carname">{{item.name}}</view>
+      </view>
+      <view class="public">
+        <view class="longitude">经度：{{item.longitude}}</view>
+        <view class="latitude">经度：{{item.latitude}}</view>
+      </view>
+      <view class="public">
+        <view>费用</view>
+        <view  class="money">{{item.money?item.money:'暂无费用'}}</view>
+      </view>
+      <view wx:if="{{!item.end}}" class="public">
+        <view></view>
+      <button type="primary"  bindtap="clickover" data-star="{{item.star}}" data-id="{{item.recordid}}" size='mini'>结束</button>
+      
+      </view>
+
+
+    </view>
+  </view>
+</view>

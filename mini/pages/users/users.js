@@ -5,11 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+list:[],
   },
 getusers(){
   app.request('getusres',{}).then(res=>{
-    console.log(res)
+    this.setData({
+      list:res.data
+    })
   })
 },
   /**

@@ -58,6 +58,8 @@ Page({
           minutes: res.data[0].minutes,
           hourcost: res.data[0].hourcost
         })
+        app.globalData.minutes = this.data.minutes
+        app.globalData.hourcost = this.data.hourcost
       }
     })
   },

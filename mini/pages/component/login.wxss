@@ -56,5 +56,6 @@ width: 49%;
   margin-top:20rpx;
 }
 .cancel{
+  color: rgb(91, 214, 124);
   border-right: 1px solid #ddd;
 }

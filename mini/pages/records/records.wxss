@@ -1,0 +1,47 @@
+Page{
+  background: #f3f3f3;
+}
+.list_warp{
+ padding: 10rpx 24rpx;
+}
+.list_view{
+ padding: 16rpx 20rpx;
+ border-radius: 10rpx;
+ background: #fff;
+ margin-top: 18rpx;
+ font-size: 28rpx;
+ color: #101010;
+
+}
+.public{
+  margin-top: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.avatar{
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+.startime{
+  margin-left: auto;
+}
+.list_cen{
+  
+}
+.moeny{
+  font-size: 34rpx;
+  color: #f66;
+  font-weight: 600;
+}
+button{
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+.list_top{
+  display: flex;
+  align-items: center;
+}

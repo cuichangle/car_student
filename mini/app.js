@@ -81,6 +81,8 @@ App({
   globalData: {
     url:'http://localhost:4000/',//请求地址
     userInfo: '',
+    minutes:'10',
+    hourcost:'20',//默认停车费用
     
   },
 

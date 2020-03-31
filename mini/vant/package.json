@@ -1,20 +1,20 @@
 {
-  "_from": "@vant/weapp",
+  "_from": "@vant/weapp@^1.1.0",
   "_id": "@vant/weapp@1.1.0",
   "_inBundle": false,
   "_integrity": "sha512-OfYxGo96Ui9a5YfTBtTY3+Ox0PHpzQ+BprvcT0Rbe9rhiaiunIEcmo+cZ1280ES74Y9dnsGf10IjnX5D8Z6sww==",
   "_location": "/@vant/weapp",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "range",
     "registry": true,
-    "raw": "@vant/weapp",
+    "raw": "@vant/weapp@^1.1.0",
     "name": "@vant/weapp",
     "escapedName": "@vant%2fweapp",
     "scope": "@vant",
-    "rawSpec": "",
+    "rawSpec": "^1.1.0",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "^1.1.0"
   },
   "_requiredBy": [
     "#USER",
@@ -22,8 +22,8 @@
   ],
   "_resolved": "https://registry.npmjs.org/@vant/weapp/-/weapp-1.1.0.tgz",
   "_shasum": "8f4cc3614af516df6f5bc847dc85c946b5389f85",
-  "_spec": "@vant/weapp",
-  "_where": "E:\\公共的文件\\car_student",
+  "_spec": "@vant/weapp@^1.1.0",
+  "_where": "E:\\公共的文件\\car_student\\mini\\vant",
   "author": {
     "name": "youzan"
   },

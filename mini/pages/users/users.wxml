@@ -1,2 +1,9 @@
-<!--pages/users/users.wxml-->
-<text>pages/users/users.wxml</text>
+<view class="list_warp">
+    <view class="list_view" wx:for="{{list}}" wx:key="index" >
+             <view class=" list_top ">
+        <image class="avatar" src="{{item.avatar}}"></image>
+        <view class="nickname">{{item.nickname}}</view>
+      
+      </view>
+    </view>
+</view>
